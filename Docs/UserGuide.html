@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Markdown Editor - User Guide</title>
+  <style>body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #222;
+  background: #ffffff;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px 40px;
+}
+h1, h2, h3, h4 {
+  color: #0F4E92;
+  margin-top: 1.5em;
+}
+h1 { border-bottom: 2px solid #0F4E92; padding-bottom: 6px; }
+h2 { border-bottom: 1px solid #dddddd; padding-bottom: 4px; }
+code {
+  font-family: Consolas, 'Courier New', monospace;
+  background: #f3f3f3;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+pre {
+  background: #f6f8fa;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+pre code {
+  background: none;
+  padding: 0;
+}
+blockquote {
+  border-left: 4px solid #0F4E92;
+  margin: 12px 0;
+  padding: 8px 16px;
+  color: #555;
+  background: #f9f9f9;
+}
+table {
+  border-collapse: collapse;
+  margin: 12px 0;
+  width: 100%;
+}
+th, td {
+  border: 1px solid #dddddd;
+  padding: 8px 12px;
+  text-align: left;
+}
+th {
+  background: #f3f3f3;
+  font-weight: 600;
+}
+a {
+  color: #0F4E92;
+}
+hr {
+  border: none;
+  border-top: 1px solid #dddddd;
+  margin: 24px 0;
+}</style>
+</head>
+<body>
+<h1 id="markdown-editor-user-guide">Markdown Editor — User Guide</h1>
+<p><strong>Version 2.0.0</strong> — Portable WinUI 3 Markdown Editor for Windows 11 and Server 2025</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li>Overview</li>
+<li>Getting Started</li>
+<li>Features</li>
+<li>Editing Shortcuts</li>
+<li>Find and Replace</li>
+<li>Templates</li>
+<li>PDF Export</li>
+<li>Multi-Tab Editing</li>
+<li>Theming</li>
+<li>Portable Deployment</li>
+<li>Autosave and Backups</li>
+<li>Storage Locations</li>
+<li>Release History</li>
+<li>Markdown Syntax Reference</li>
+</ul>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>Markdown Editor is a self-contained, portable, WinUI 3 desktop application for authoring and previewing Markdown documents. It is designed for IT professionals writing standard operating procedures, runbooks, meeting notes, README files, and Copilot agent instructions.</p>
+<p>The application requires no installation. Extract the folder anywhere — USB drive, network share, or local disk — and launch the executable. Your settings, autosaves, backups, and logs are stored alongside the executable in a per-user profile folder, so your work travels with the application folder.</p>
+<p>Key characteristics:</p>
+<ul>
+<li>Runs on Windows 11 and Windows Server 2025 with Desktop Experience</li>
+<li>No installation required, no registry modifications, no admin rights needed</li>
+<li>All data is stored in the application folder for portability</li>
+<li>Falls back gracefully to <code>%LOCALAPPDATA%</code> when running from a read-only location</li>
+</ul>
+<hr />
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="first-launch">First Launch</h3>
+<p>Double-click <code>MarkdownEditor.exe</code>. On first launch, the application creates a <code>Data</code> folder alongside the executable to hold your profile.</p>
+<p>You will see:</p>
+<ul>
+<li>A toolbar at the top with buttons for New, Open, Save, Save As, Export PDF, formatting shortcuts, theme selection, and find/replace</li>
+<li>A tab strip below the toolbar with one open tab</li>
+<li>An editor pane on the left and a live preview pane on the right, split into two equal columns</li>
+<li>A status bar at the bottom showing the current message and portable-mode information</li>
+</ul>
+<h3 id="typing-and-preview">Typing and Preview</h3>
+<p>Start typing in the editor pane. The preview updates automatically. Everything you type is autosaved every few seconds — you can close the application at any time without losing work.</p>
+<h3 id="saving">Saving</h3>
+<p>Save with <strong>Ctrl+S</strong> or the Save toolbar button. If the document has never been saved, a Save As dialog appears. Once saved, the tab title changes from the placeholder name (e.g., <code>Untitled 1.md</code>) to the file name.</p>
+<hr />
+<h2 id="features">Features</h2>
+<h3 id="editing">Editing</h3>
+<ul>
+<li>Full Unicode support with UTF-8 encoding</li>
+<li>Native undo and redo (Ctrl+Z, Ctrl+Y)</li>
+<li>Consolas 15pt font for the editor</li>
+<li>Selection is highlighted even when focus is elsewhere (useful during Find/Replace)</li>
+</ul>
+<h3 id="live-preview">Live Preview</h3>
+<ul>
+<li>Renders Markdown to HTML using the Markdig library</li>
+<li>Uses a WebView2 control (Chromium-based)</li>
+<li>Preview updates as you type</li>
+<li>Theme-aware — background and text colors change with theme selection</li>
+<li>Supports advanced Markdown extensions (tables, fenced code blocks, task lists, footnotes)</li>
+</ul>
+<h3 id="toolbar">Toolbar</h3>
+<ul>
+<li><strong>New</strong> — Create a new Untitled document in a new tab</li>
+<li><strong>New from Template</strong> — Choose from a dropdown of installed templates</li>
+<li><strong>Open</strong> — Open a Markdown file. The dropdown arrow shows Recent Files.</li>
+<li><strong>Save</strong> — Save the current document</li>
+<li><strong>Save As</strong> — Save the current document to a new location</li>
+<li><strong>Export PDF</strong> — Render the current document as a PDF</li>
+<li><strong>Bold, Italic, Heading, Bullet, Link, Code</strong> — Insert Markdown syntax</li>
+<li><strong>Find and Replace</strong> — Search within the current document</li>
+<li><strong>Theme</strong> — Switch between Light, Dark, and System themes</li>
+</ul>
+<hr />
+<h2 id="editing-shortcuts">Editing Shortcuts</h2>
+<p>Keyboard shortcuts speed up common formatting tasks and mimic conventions used in Notion, Obsidian, and VS Code.</p>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ctrl+B</td>
+<td>Wrap selection in <strong>bold</strong></td>
+</tr>
+<tr>
+<td>Ctrl+I</td>
+<td>Wrap selection in <em>italic</em></td>
+</tr>
+<tr>
+<td>Ctrl+1</td>
+<td>Toggle H1 heading on current line</td>
+</tr>
+<tr>
+<td>Ctrl+2</td>
+<td>Toggle H2 heading on current line</td>
+</tr>
+<tr>
+<td>Ctrl+3</td>
+<td>Toggle H3 heading on current line</td>
+</tr>
+<tr>
+<td>Ctrl+4</td>
+<td>Toggle H4 heading on current line</td>
+</tr>
+<tr>
+<td>Ctrl+0</td>
+<td>Remove heading from current line</td>
+</tr>
+<tr>
+<td>Enter (on a <code>- </code> line)</td>
+<td>Continue the bulleted list</td>
+</tr>
+<tr>
+<td>Enter (on a <code>1. </code> line)</td>
+<td>Continue and auto-increment the numbered list</td>
+</tr>
+<tr>
+<td>Enter (on an empty list marker)</td>
+<td>Exit the list</td>
+</tr>
+<tr>
+<td>Tab (on a list line)</td>
+<td>Indent the list item by 2 spaces</td>
+</tr>
+<tr>
+<td>Shift+Tab (on a list line)</td>
+<td>Outdent the list item</td>
+</tr>
+<tr>
+<td>Ctrl+Z</td>
+<td>Undo</td>
+</tr>
+<tr>
+<td>Ctrl+Y</td>
+<td>Redo</td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading-toggle-behavior">Heading Toggle Behavior</h3>
+<p>Heading shortcuts are toggles. Pressing Ctrl+2 on a line that is already H2 removes the heading. Pressing a different level changes the heading to that level.</p>
+<p>Ctrl+0 always removes the heading regardless of current level.</p>
+<h3 id="list-continuation">List Continuation</h3>
+<p>When you press Enter on a line that starts with a list marker, the next line automatically starts with the same marker. For numbered lists, the number increments.</p>
+<p>Pressing Enter on an empty list marker exits the list — useful when you're done adding items.</p>
+<hr />
+<h2 id="find-and-replace">Find and Replace</h2>
+<p>Press <strong>Ctrl+F</strong> to open the Find bar. Press <strong>Ctrl+H</strong> to open Find and Replace.</p>
+<ul>
+<li><strong>Enter</strong> in the Find box — Find next</li>
+<li><strong>Shift+Enter</strong> in the Find box — Find previous</li>
+<li><strong>F3</strong> — Find next</li>
+<li><strong>Shift+F3</strong> — Find previous</li>
+<li><strong>Esc</strong> — Close the Find bar</li>
+<li><strong>Aa</strong> button — Match case</li>
+<li><strong>ab</strong> button — Whole word only</li>
+<li><strong>Replace</strong> button — Replace the current match</li>
+<li><strong>Replace All</strong> button — Replace every match at once</li>
+</ul>
+<p>The match counter shows &quot;Match N of M&quot; so you always know your position.</p>
+<p>All replacements preserve undo history. Press Ctrl+Z after Replace All to revert every change with a single undo.</p>
+<p>Find and Replace operates only within the currently active tab.</p>
+<hr />
+<h2 id="templates">Templates</h2>
+<p>Templates are Markdown files stored in the <code>Templates</code> folder alongside the executable. Click the <strong>New from Template</strong> toolbar button (folder icon) to see a dropdown of available templates.</p>
+<p>Selecting a template opens it as a new tab with the template content pre-loaded. The tab is marked as unsaved, so your first Save prompts for a location.</p>
+<h3 id="included-templates">Included Templates</h3>
+<ul>
+<li><strong>Standard SOP Document</strong> — Structured operating procedure with sections for Purpose, Scope, Roles, Steps, Verification, and Revision History</li>
+<li><strong>GitHub ReadMe Document</strong> — Project README with sections for Overview, Features, Installation, Usage, and Contribution</li>
+<li><strong>Copilot Agent Instruction</strong> — Full-agent authoring template covering Persona, Scope, Response Style, Guardrails, and Governance</li>
+<li><strong>Copilot Agent Skill</strong> — Per-skill template covering Triggers, Inputs, Outputs, Behavior, Error Handling, and Telemetry</li>
+</ul>
+<h3 id="adding-your-own-templates">Adding Your Own Templates</h3>
+<p>Drop any <code>.md</code> file into the <code>Templates</code> folder. The dropdown updates automatically the next time you open it. The filename (without extension) becomes the template name.</p>
+<h3 id="refreshing-the-list">Refreshing the List</h3>
+<p>Click <strong>Refresh templates</strong> in the dropdown to re-scan the folder — useful if you just added a new template.</p>
+<h3 id="opening-the-folder">Opening the Folder</h3>
+<p>Click <strong>Open templates folder</strong> to launch File Explorer at the <code>Templates</code> directory.</p>
+<hr />
+<h2 id="pdf-export">PDF Export</h2>
+<p>Click the <strong>Export PDF</strong> toolbar button to render the current document as a PDF.</p>
+<ul>
+<li>The PDF preserves your current theme (Light mode produces a white PDF, Dark mode produces a dark PDF)</li>
+<li>The PDF opens automatically in your default PDF viewer after export</li>
+<li>Margins are 0.75 inches on all sides</li>
+<li>Backgrounds and code block styling are preserved</li>
+<li>The suggested filename matches the current document name</li>
+</ul>
+<p>PDF export uses WebView2's native rendering engine — the same engine that produces the on-screen preview — so what you see is what you get.</p>
+<hr />
+<h2 id="multi-tab-editing">Multi-Tab Editing</h2>
+<p>Open multiple documents simultaneously. Each tab has its own independent editor, preview, and undo history.</p>
+<h3 id="tab-actions">Tab Actions</h3>
+<ul>
+<li><strong>Plus (+)</strong> button on the tab strip — Open a new Untitled tab</li>
+<li><strong>X</strong> button on a tab — Close that tab</li>
+<li><strong>Drag tabs</strong> — Reorder tabs by dragging their headers</li>
+<li><strong>Hover</strong> — See the full file path in a tooltip</li>
+<li><strong>Asterisk (*)</strong> in the tab title — Indicates unsaved changes</li>
+</ul>
+<h3 id="automatic-switch-to-existing">Automatic Switch-to-Existing</h3>
+<p>If you open a file that's already open in another tab, the application switches to that tab instead of creating a duplicate.</p>
+<h3 id="closing-behavior">Closing Behavior</h3>
+<ul>
+<li>Closing the last tab automatically creates a new Untitled tab (never leaves you with zero tabs)</li>
+<li>No prompt appears when closing an unsaved tab — autosave handles crash recovery</li>
+</ul>
+<h3 id="session-restore">Session Restore</h3>
+<p>When you launch the application, every tab that was open on the previous session is restored automatically. Each tab reopens with its content and file path preserved.</p>
+<hr />
+<h2 id="theming">Theming</h2>
+<p>The application supports three themes:</p>
+<ul>
+<li><strong>System</strong> — Follows Windows theme (default)</li>
+<li><strong>Light</strong> — Force light mode</li>
+<li><strong>Dark</strong> — Force dark mode</li>
+</ul>
+<p>Click the <strong>Theme</strong> toolbar button and pick from the dropdown. The choice persists across launches.</p>
+<p>The theme applies to:</p>
+<ul>
+<li>Editor chrome (title bar, toolbar, tab strip, status bar)</li>
+<li>Preview pane (background, text, headings, code blocks, tables, blockquotes)</li>
+<li>All open tabs simultaneously</li>
+</ul>
+<hr />
+<h2 id="portable-deployment">Portable Deployment</h2>
+<p>The application is fully portable. Move or copy the entire folder to any Windows machine and it just runs.</p>
+<h3 id="usb-deployment">USB Deployment</h3>
+<p>Extract the ZIP into a folder on a USB drive:</p>
+<p>E:\MarkdownEditor\</p>
+<p>Eject and plug into another machine. Launch <code>MarkdownEditor.exe</code>. All your settings, tabs, autosaves, and backups travel with the USB drive.</p>
+<h3 id="network-share-deployment">Network Share Deployment</h3>
+<p>Copy the folder to a network share:</p>
+<p>\fileserver\Tools\MarkdownEditor\</p>
+<p>Users can launch it directly from the share. If the share is read-only, the application detects this and falls back to <code>%LOCALAPPDATA%\MarkdownEditor\Profiles\&lt;username&gt;\</code> for user data. This lets IT deploy the application read-only for security while still allowing users to save their own work.</p>
+<h3 id="multi-user-support">Multi-User Support</h3>
+<p>Every user gets a separate profile subfolder inside <code>Data\Profiles\&lt;username&gt;\</code>. This works even when multiple users share the same portable folder — each has independent settings, tabs, autosaves, and backups.</p>
+<hr />
+<h2 id="autosave-and-backups">Autosave and Backups</h2>
+<h3 id="autosave">Autosave</h3>
+<p>Every open tab is autosaved to disk a few seconds after the last edit. Autosave is per-tab — each tab has its own draft file. Drafts are stored as JSON snapshots in the autosave folder.</p>
+<p>Autosave means:</p>
+<ul>
+<li>You can close the application at any time without losing work</li>
+<li>Every open tab restores automatically on next launch</li>
+<li>If the machine crashes or power is lost, drafts persist</li>
+</ul>
+<h3 id="backups">Backups</h3>
+<p>Every time you Save, a timestamped copy of the previous version is placed in the <code>Backups</code> folder. Filenames follow the pattern <code>&lt;name&gt;-&lt;yyyyMMdd-HHmmss&gt;.md.bak</code> so recent backups sort to the top.</p>
+<p>The application retains the 25 most recent backups by default (configurable in <code>Settings.json</code>). Older backups are pruned automatically.</p>
+<p>Backups protect you from accidental overwrites — even if you save over a document you didn't mean to, the previous version is one folder away.</p>
+<h3 id="atomic-writes">Atomic Writes</h3>
+<p>All file writes (autosave, save, backup, settings, session) use a temp-file-plus-rename pattern. If the write is interrupted, the original file remains intact. You will never have a partial or corrupt file.</p>
+<hr />
+<h2 id="storage-locations">Storage Locations</h2>
+<p>By default, everything lives inside the application folder:</p>
+<p>MarkdownEditor.exe Templates
+Standard SOP Document.md ... Data
+Profiles</p>
+<p>Autosave
+Draft-.json Backups
+-.md.bak Logs
+Application.log Settings
+Settings.json</p>
+<p>If the application folder is read-only (running from a locked-down network share, for example), user data falls back to:</p>
+<p>%LOCALAPPDATA%\MarkdownEditor\Profiles<username>\</p>
+<p>The status bar shows &quot;Portable&quot; when writing locally or &quot;Fallback&quot; when using <code>%LOCALAPPDATA%</code>.</p>
+<hr />
+<h2 id="release-history">Release History</h2>
+<h3 id="v2.0.0-major">v2.0.0 (Major)</h3>
+<ul>
+<li>Multi-tab editing with independent per-tab undo, editor, and preview</li>
+<li>Session restore across launches (all tabs reopen automatically)</li>
+<li>Autosave keyed per document ID</li>
+<li>Switch-to-existing tab when reopening a file</li>
+<li>New from Template opens as a new tab</li>
+</ul>
+<h3 id="v1.4.0-minor">v1.4.0 (Minor)</h3>
+<ul>
+<li>Ctrl+B and Ctrl+I keyboard shortcuts for bold and italic</li>
+<li>List auto-continuation for bulleted and numbered lists</li>
+<li>Auto-increment for numbered lists</li>
+<li>Empty list-line exit behavior</li>
+<li>Tab and Shift+Tab for list indent and outdent</li>
+<li>Ctrl+0 through Ctrl+4 for heading toggling</li>
+</ul>
+<h3 id="v1.3.1-patch">v1.3.1 (Patch)</h3>
+<ul>
+<li>Fixed: Find and Replace matches now visibly highlighted while Find box has focus</li>
+<li>Editor auto-scrolls to matches when navigating with F3</li>
+</ul>
+<h3 id="v1.3.0-minor">v1.3.0 (Minor)</h3>
+<ul>
+<li>Export to PDF using WebView2's native rendering</li>
+<li>Theme-aware PDF output (light or dark)</li>
+<li>Auto-opens PDF in default viewer after export</li>
+</ul>
+<h3 id="v1.2.0-minor">v1.2.0 (Minor)</h3>
+<ul>
+<li>Find and Replace panel with Ctrl+F and Ctrl+H shortcuts</li>
+<li>Match case and match whole word options</li>
+<li>Match counter showing &quot;Match N of M&quot;</li>
+<li>Replace one and Replace All actions</li>
+<li>F3 and Shift+F3 to navigate matches</li>
+</ul>
+<h3 id="v1.1.0-minor">v1.1.0 (Minor)</h3>
+<ul>
+<li>Templates folder with four starter templates</li>
+<li>New from Template toolbar dropdown</li>
+<li>Custom templates supported (drop any .md file into Templates folder)</li>
+<li>Refresh templates and Open templates folder actions</li>
+</ul>
+<h3 id="v1.0.0-major">v1.0.0 (Major)</h3>
+<ul>
+<li>Initial release</li>
+<li>Live Markdown preview via Markdig and WebView2</li>
+<li>Open, Save, Save As with atomic writes and automatic backups</li>
+<li>Recent Files dropdown</li>
+<li>Light, Dark, and System theme switcher</li>
+<li>Window size and position persistence</li>
+<li>Crash-safe autosave with restore on launch</li>
+<li>Per-user profile isolation</li>
+<li>Structured rotating logs</li>
+<li>Portable folder layout with %LOCALAPPDATA% fallback</li>
+</ul>
+<hr />
+<h2 id="markdown-syntax-reference">Markdown Syntax Reference</h2>
+<p>Markdown is a plain-text formatting syntax that converts to HTML. The application supports the full CommonMark specification plus Markdig's advanced extensions.</p>
+<h3 id="headings">Headings</h3>
+<p>Prefix a line with one to six hash marks:</p>
+<pre><code># Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+</code></pre>
+<p>Renders as decreasing-size headings.</p>
+<h3 id="emphasis">Emphasis</h3>
+<p>Wrap text in asterisks or underscores:</p>
+<pre><code>*italic* or _italic_
+**bold** or __bold__
+***bold italic*** or ___bold italic___
+~~strikethrough~~
+</code></pre>
+<p>Renders as <em>italic</em>, <strong>bold</strong>, <em><strong>bold italic</strong></em>, <del>strikethrough</del>.</p>
+<h3 id="paragraphs-and-line-breaks">Paragraphs and Line Breaks</h3>
+<p>Separate paragraphs with a blank line. To force a line break without a new paragraph, end a line with two spaces or a backslash.</p>
+<h3 id="bulleted-lists">Bulleted Lists</h3>
+<p>Any of these three markers work:</p>
+<pre><code>- Item
+* Item
++ Item
+</code></pre>
+<p>Nest by indenting two spaces per level:</p>
+<pre><code>- Outer
+  - Inner
+    - Deepest
+</code></pre>
+<h3 id="numbered-lists">Numbered Lists</h3>
+<p>Prefix with a number and period:</p>
+<pre><code>1. First
+2. Second
+3. Third
+</code></pre>
+<p>The renderer ignores the actual numbers you type — only the position matters. You can write <code>1. </code>, <code>1. </code>, <code>1. </code> and it renders as 1, 2, 3. The first number is honored as the starting offset.</p>
+<h3 id="task-lists-gfm-extension">Task Lists (GFM Extension)</h3>
+<pre><code>- [ ] Unchecked task
+- [x] Completed task
+</code></pre>
+<p>Renders as clickable-looking checkboxes.</p>
+<h3 id="links">Links</h3>
+<p>Inline links:</p>
+<pre><code>[link text](https://example.com)
+[with title](https://example.com)
+</code></pre>
+<p>Reference links:</p>
+<pre><code>[link text][label]
+
+[label]: https://example.com
+</code></pre>
+<p>Autolinks:</p>
+<pre><code>&lt;https://example.com&gt;
+</code></pre>
+<h3 id="images">Images</h3>
+<p>Same syntax as links, prefixed with an exclamation mark:</p>
+<pre><code>path/to/image.png
+image.png &quot;Optional title&quot;
+</code></pre>
+<h3 id="blockquotes">Blockquotes</h3>
+<p>Prefix lines with a right angle bracket:</p>
+<pre><code>&gt; This is a blockquote.
+&gt; It can span multiple lines.
+&gt;
+&gt; &gt; Nested blockquotes work too.
+</code></pre>
+<h3 id="code">Code</h3>
+<p>Inline code uses backticks:</p>
+<pre><code>Use the `Get-Item` cmdlet.
+</code></pre>
+<p>Fenced code blocks use three backticks. You can specify a language for syntax highlighting:</p>
+<pre><code>``` powershell
+Get-Process | Where-Object CPU -gt 100
+```
+
+``` csharp
+public void Hello()
+{
+    Console.WriteLine(&quot;Hi&quot;);
+}
+```
+</code></pre>
+<p>Indented code blocks use four spaces of indent instead of fences.</p>
+<h3 id="horizontal-rules">Horizontal Rules</h3>
+<p>Three or more hyphens, asterisks, or underscores on their own line:</p>
+<pre><code>---
+***
+___
+</code></pre>
+<h3 id="tables">Tables</h3>
+<p>Tables are pipe-separated columns with a header row and an alignment row.</p>
+<p>Basic table:</p>
+<pre><code>| Column 1 | Column 2 | Column 3 |
+|----------|----------|----------|
+| Value A  | Value B  | Value C  |
+| Value D  | Value E  | Value F  |
+</code></pre>
+<p>Alignment is controlled by the colons in the alignment row:</p>
+<pre><code>| Left-aligned | Centered | Right-aligned |
+|:-------------|:--------:|--------------:|
+| text         | text     | text          |
+| more         | more     | more          |
+</code></pre>
+<ul>
+<li><code>:---</code> — left align (default)</li>
+<li><code>:---:</code> — center align</li>
+<li><code>---:</code> — right align</li>
+</ul>
+<p>Column widths auto-fit content. You do not need to pad columns for the table to render, but padding makes the source easier to read.</p>
+<p>Tables can contain inline formatting:</p>
+<pre><code>| Feature | Ctrl+F | Description |
+|---------|--------|-------------|
+| **Find** | Yes | Search current tab |
+| *Match case* | Aa | Toggle case sensitivity |
+</code></pre>
+<h3 id="footnotes-markdig-extension">Footnotes (Markdig Extension)</h3>
+<pre><code>Here is some text with a footnote.[^1]
+
+[^1]: This is the footnote content.
+</code></pre>
+<h3 id="html">HTML</h3>
+<p>Raw HTML is passed through:</p>
+<pre><code>&lt;div style=&quot;color: red&quot;&gt;
+  Custom HTML in Markdown
+&lt;/div&gt;
+</code></pre>
+<p>Use sparingly — HTML embedded in Markdown reduces portability.</p>
+<h3 id="escaping">Escaping</h3>
+<p>Prefix a special character with a backslash to render it literally:</p>
+<pre><code>\*not italic\*
+\# not a heading
+\` not code
+</code></pre>
+<p>The characters most commonly escaped are <code>\ </code> <code>`</code> <code>*</code> <code>_</code> <code>{ }</code> <code>[ ]</code> <code>( )</code> <code>#</code> <code>+</code> <code>-</code> <code>.</code> <code>!</code>.</p>
+<h3 id="comments">Comments</h3>
+<p>Markdown has no native comment syntax. Use HTML comments if needed:</p>
+<pre><code>&lt;!-- This is a comment and won't render. --&gt;
+</code></pre>
+<hr />
+<h2 id="appendix-where-to-get-help">Appendix — Where to Get Help</h2>
+<ul>
+<li>The application logs to <code>Data\Profiles\&lt;username&gt;\Logs\Application.log</code> — check this file if something misbehaves</li>
+<li>Settings live in <code>Data\Profiles\&lt;username&gt;\Settings\Settings.json</code> and can be edited directly if needed</li>
+<li>All source files are under <code>Docs\</code> in the application folder</li>
+<li>The application is self-contained — there is no external dependency to install</li>
+</ul>
+<hr />
+<p><em>Markdown Editor — Portable WinUI 3 for Windows 11 and Server 2025</em></p>
+
+</body>
+</html>
