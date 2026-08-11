@@ -1,0 +1,461 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:ConnectionId='1'
+    x:Class="MarkdownEditor.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:webview="using:Microsoft.UI.Xaml.Controls"
+    xmlns:vm="using:MarkdownEditor.ViewModels">
+
+    <Grid x:ConnectionId='2' x:Name="RootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.KeyboardAccelerators>
+
+            <KeyboardAccelerator x:ConnectionId='3' Key="F"
+                         Modifiers="Control"
+                                                               />
+
+            <KeyboardAccelerator x:ConnectionId='4' Key="H"
+                         Modifiers="Control"
+                                                                  />
+
+            <KeyboardAccelerator x:ConnectionId='5' Key="F3"
+                         Modifiers="None"
+                                                               />
+
+            <KeyboardAccelerator x:ConnectionId='6' Key="F3"
+                         Modifiers="Shift"
+                                                                   />
+
+            <KeyboardAccelerator x:ConnectionId='7' Key="B"
+                         Modifiers="Control"
+                                                           />
+
+            <KeyboardAccelerator x:ConnectionId='8' Key="I"
+                         Modifiers="Control"
+                                                             />
+
+            <KeyboardAccelerator x:ConnectionId='9' Key="Number1"
+                         Modifiers="Control"
+                                                               />
+
+            <KeyboardAccelerator x:ConnectionId='10' Key="Number2"
+                         Modifiers="Control"
+                                                               />
+
+            <KeyboardAccelerator x:ConnectionId='11' Key="Number3"
+                         Modifiers="Control"
+                                                               />
+
+            <KeyboardAccelerator x:ConnectionId='12' Key="Number4"
+                         Modifiers="Control"
+                                                               />
+
+            <KeyboardAccelerator x:ConnectionId='13' Key="Number0"
+                         Modifiers="Control"
+                                                                   />
+
+        </Grid.KeyboardAccelerators>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="32" />
+        </Grid.RowDefinitions>
+
+        <!-- Toolbar -->
+        <Border Grid.Row="0"
+                Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}"
+                BorderThickness="0,0,0,1">
+
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled"
+                          HorizontalScrollMode="Auto">
+
+                <StackPanel x:ConnectionId='34' x:Name="ToolbarPanel"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            Padding="4,2,4,2">
+
+                    <AppBarButton x:ConnectionId='35' Icon="Page"
+                                  Label="New"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="New"
+                                                                          />
+
+                    <DropDownButton x:ConnectionId='36' x:Name="NewFromTemplateButton"
+                                    ToolTipService.ToolTip="New from Template"
+                                    VerticalAlignment="Center"
+                                    Margin="2,2,2,2"
+                                    Padding="8,6,8,6">
+
+                        <SymbolIcon Symbol="NewFolder" />
+
+                        <DropDownButton.Flyout>
+                            <MenuFlyout x:ConnectionId='57' x:Name="TemplatesFlyout"
+                                        Placement="Bottom"
+                                                                          />
+                        </DropDownButton.Flyout>
+
+                    </DropDownButton>
+
+                    <SplitButton x:ConnectionId='37' x:Name="OpenSplitButton"
+                                                                         
+                                 ToolTipService.ToolTip="Open file (click) - Recent files (arrow)"
+                                 VerticalAlignment="Center"
+                                 Margin="2,2,2,2"
+                                 Padding="8,6,8,6">
+
+                        <SymbolIcon Symbol="OpenFile" />
+
+                        <SplitButton.Flyout>
+                            <MenuFlyout x:ConnectionId='56' x:Name="RecentFilesFlyout"
+                                        Placement="Bottom"
+                                                                            />
+                        </SplitButton.Flyout>
+
+                    </SplitButton>
+
+                    <AppBarButton x:ConnectionId='38' Icon="Save"
+                                  Label="Save"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Save"
+                                                                           />
+
+                    <AppBarButton x:ConnectionId='39' Icon="SaveLocal"
+                                  Label="Save As"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Save As"
+                                                                             />
+
+
+                    <AppBarButton x:ConnectionId='40' Icon="Print"
+                                  Label="Export PDF"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Export to PDF"
+                                                                                />
+
+                    <AppBarSeparator />
+
+                    <AppBarButton x:ConnectionId='41' Icon="Find"
+                                  Label="Find"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Find (Ctrl+F)"
+                                                                  />
+
+                    <AppBarButton x:ConnectionId='42' Icon="Repair"
+                                  Label="Find and Replace"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Find and Replace (Ctrl+H)"
+                                                                     />
+
+                    <AppBarButton x:ConnectionId='43' Icon="Bold"
+                                  Label="Bold"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Bold"
+                                                                           />
+
+                    <AppBarButton x:ConnectionId='44' Icon="Italic"
+                                  Label="Italic"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Italic"
+                                                                             />
+
+                    <AppBarButton x:ConnectionId='45' Icon="Add"
+                                  Label="Heading"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Heading"
+                                                                              />
+
+                    <AppBarButton x:ConnectionId='46' Icon="List"
+                                  Label="Bullet"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Bullet List"
+                                                                             />
+
+                    <AppBarButton x:ConnectionId='47' Icon="Link"
+                                  Label="Link"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Link"
+                                                                           />
+
+                    <AppBarButton x:ConnectionId='48' Icon="Comment"
+                                  Label="Code"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Code"
+                                                                           />
+
+                    <AppBarSeparator />
+
+                    <AppBarButton x:ConnectionId='49' Icon="Edit"
+                                  Label="Toggle Editor"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Toggle Editor"
+                                                                                   />
+
+                    <AppBarButton x:ConnectionId='50' Icon="View"
+                                  Label="Toggle Preview"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Toggle Preview"
+                                                                                    />
+
+                    <AppBarSeparator />
+
+                    <DropDownButton x:ConnectionId='51' x:Name="ThemeDropDownButton"
+                                    ToolTipService.ToolTip="Theme"
+                                    VerticalAlignment="Center"
+                                    Margin="2,2,2,2"
+                                    Padding="8,6,8,6">
+
+                        <SymbolIcon Symbol="View" />
+
+                        <DropDownButton.Flyout>
+                            <MenuFlyout x:ConnectionId='52' x:Name="ThemeFlyout" Placement="Bottom">
+
+                                <MenuFlyoutItem x:ConnectionId='53' x:Name="ThemeSystemItem"
+                            Text="System"
+                                                         >
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE770;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+
+                                <MenuFlyoutItem x:ConnectionId='54' x:Name="ThemeLightItem"
+                            Text="Light"
+                                                        >
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE706;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+
+                                <MenuFlyoutItem x:ConnectionId='55' x:Name="ThemeDarkItem"
+                            Text="Dark"
+                                                       >
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE708;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+
+                            </MenuFlyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Editor + Preview -->
+        <!-- Main content (Find/Replace + Tab View) -->
+        <Grid Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Find / Replace (shared, operates on active tab) -->
+            <Border x:ConnectionId='16' x:Name="FindReplacePanel"
+            Grid.Row="0"
+            Visibility="Collapsed"
+            Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+            BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}"
+            BorderThickness="0,0,0,1"
+            Padding="8,6,8,6">
+
+                <StackPanel Orientation="Vertical" Spacing="4">
+
+                    <!-- Find row -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:ConnectionId='27' x:Name="FindTextBox"
+                         Grid.Column="0"
+                         PlaceholderText="Find"
+                         FontFamily="Segoe UI"
+                         FontSize="13"
+                         Margin="0,0,8,0"
+                                                      
+                                                               />
+
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
+                            <Button x:ConnectionId='28' x:Name="FindPreviousButton"
+                            ToolTipService.ToolTip="Find previous (Shift+F3)"
+                            Padding="6"
+                                                            >
+                                <FontIcon Glyph="&#xE70E;" FontSize="14" />
+                            </Button>
+
+                            <Button x:ConnectionId='29' x:Name="FindNextButton"
+                            ToolTipService.ToolTip="Find next (F3)"
+                            Padding="6"
+                                                        >
+                                <FontIcon Glyph="&#xE70D;" FontSize="14" />
+                            </Button>
+
+                            <ToggleButton x:ConnectionId='30' x:Name="MatchCaseButton"
+                                  ToolTipService.ToolTip="Match case"
+                                  Padding="6"
+                                  Content="Aa"
+                                  FontWeight="SemiBold"
+                                  FontSize="12"
+                                                                
+                                                                   />
+
+                            <ToggleButton x:ConnectionId='31' x:Name="MatchWholeWordButton"
+                                  ToolTipService.ToolTip="Match whole word"
+                                  Padding="6"
+                                  Content="ab"
+                                  FontWeight="SemiBold"
+                                  FontSize="12"
+                                                                
+                                                                   />
+
+                            <ToggleButton x:ConnectionId='32' x:Name="ToggleReplaceButton"
+                                  ToolTipService.ToolTip="Toggle replace"
+                                  Padding="6"
+                                                                       
+                                                                         >
+                                <FontIcon Glyph="&#xE8AB;" FontSize="14" />
+                            </ToggleButton>
+
+                            <Button x:ConnectionId='33' x:Name="CloseFindButton"
+                            ToolTipService.ToolTip="Close (Esc)"
+                            Padding="6"
+                                                         >
+                                <FontIcon Glyph="&#xE711;" FontSize="14" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Replace row -->
+                    <Grid x:ConnectionId='22' x:Name="ReplaceRow" Visibility="Collapsed">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:ConnectionId='24' x:Name="ReplaceTextBox"
+                         Grid.Column="0"
+                         PlaceholderText="Replace"
+                         FontFamily="Segoe UI"
+                         FontSize="13"
+                         Margin="0,0,8,0"
+                                                          />
+
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
+                            <Button x:ConnectionId='25' x:Name="ReplaceOneButton"
+                            ToolTipService.ToolTip="Replace next match"
+                            Padding="6"
+                            Content="Replace"
+                            FontSize="12"
+                                                           />
+
+                            <Button x:ConnectionId='26' x:Name="ReplaceAllButton"
+                            ToolTipService.ToolTip="Replace all matches"
+                            Padding="6"
+                            Content="Replace All"
+                            FontSize="12"
+                                                           />
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock x:ConnectionId='23' x:Name="FindStatusText" FontSize="12" Opacity="0.8" />
+
+                </StackPanel>
+            </Border>
+
+            <!-- Tab View with per-tab editor + preview -->
+            <TabView x:ConnectionId='17' x:Name="DocumentTabs"
+                     Grid.Row="1"
+                     VerticalAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                                                                          
+                                                                             
+                     IsAddTabButtonVisible="True"
+                     CanReorderTabs="True"
+                     CanDragTabs="False"
+                                                                       
+                                                                       >
+
+
+                <TabView.TabItemTemplate>
+                    <DataTemplate                                  >
+                        <TabViewItem x:ConnectionId='19'                                            
+                                                                                           
+                                     IsClosable="True"
+                                     VerticalContentAlignment="Stretch"
+                                     HorizontalContentAlignment="Stretch">
+
+                            <TabViewItem.Content>
+                                <Grid HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBox x:ConnectionId='20' Grid.Column="0"
+                                             AcceptsReturn="True"
+                                             TextWrapping="Wrap"
+                                             FontFamily="Consolas"
+                                             FontSize="15"
+                                             Padding="12"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Stretch"
+                                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                             ScrollViewer.HorizontalScrollMode="Auto"
+                                             ScrollViewer.VerticalScrollMode="Auto"
+                                             SelectionHighlightColorWhenNotFocused="{ThemeResource SystemAccentColorLight2}"
+                                                                                                                           
+                                                                           
+                                                                               
+                                                                                      />
+
+                                    <webview:WebView2 x:ConnectionId='21' Grid.Column="1"
+                                                      HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Stretch"
+                                                                                     
+                                                                                          />
+                                </Grid>
+                            </TabViewItem.Content>
+
+                        </TabViewItem>
+                    </DataTemplate>
+                </TabView.TabItemTemplate>
+
+            </TabView>
+
+        </Grid>
+
+        <!-- Status bar -->
+        <Border Grid.Row="2"
+                Background="#0F4E92"
+                Padding="8,0">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock x:ConnectionId='14' Grid.Column="0"
+                                                                               
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           FontSize="12" />
+
+                <TextBlock x:ConnectionId='15' x:Name="EnvBadge"
+                           Grid.Column="1"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           FontSize="12"
+                           Margin="12,0,0,0" />
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>
+

@@ -1,0 +1,167 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+
+		<OutputType>WinExe</OutputType>
+
+		<TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+
+		<RootNamespace>MarkdownEditor</RootNamespace>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+
+		<!-- Unpackaged WinUI 3 -->
+		<WindowsPackageType>None</WindowsPackageType>
+
+		<!-- Bundle WinAppSDK + .NET with app -->
+		<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+		<SelfContained>true</SelfContained>
+
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+
+		<!-- WinUI 3 -->
+		<UseWinUI>true</UseWinUI>
+
+		<!-- ❗ Disable MSIX tooling for unpackaged -->
+		<EnableMsixTooling>false</EnableMsixTooling>
+
+		<!-- CRITICAL for WinUI 3 self-contained on .NET 8 -->
+		<UseRidGraph>true</UseRidGraph>
+
+		<WindowsAppSdkUndockedRegFreeWinRTInitialize>true</WindowsAppSdkUndockedRegFreeWinRTInitialize>
+
+		<ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
+
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+		<Platforms>x64</Platforms>
+		<Platform>x64</Platform>
+
+		<AssemblyVersion>2.0.0.0</AssemblyVersion>
+		<FileVersion>2.0.0.0</FileVersion>
+		<Version>2.0.0</Version>
+
+		<!-- Keep only English satellite assemblies in publish output -->
+		<SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+
+		<Product>Markdown Editor</Product>
+		<Authors>Joe Paulson</Authors>
+		<Description>Portable WinUI 3 Markdown editor with multi-tab editing, autosave, live preview, themes, templates, find/replace, PDF export, and editing shortcuts.</Description>
+		<Copyright>Copyright (c) 2026 Joe Paulson</Copyright>
+
+	</PropertyGroup>
+	<ItemGroup>
+	  <Content Remove="Assets\AppIcon.ico" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Templates\Copilot Agent Instruction.md" />
+	  <None Remove="Templates\Copilot Agent Skill.md" />
+	  <None Remove="Templates\GitHub ReadMe Document.md" />
+	  <None Remove="Templates\Standard SOP Document.md" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Templates\Copilot Agent Instruction.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Copilot Agent Skill.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\GitHub ReadMe Document.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Standard SOP Document.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <!--
+    Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
+    Tools extension to be activated for this project even if the Windows App SDK Nuget
+    package has not yet been restored.
+  -->
+  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2270" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.2.0" />
+	<PackageReference Include="Markdig" Version="0.37.0" />
+  </ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Converters\" />
+	  <Folder Include="Config\" />
+	  <Folder Include="Views\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Update="Assets\AppIcon.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="Assets\AppIcon.ico">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+	<Target Name="EnsureAppResourcesInPublish" AfterTargets="Publish">
+
+		<ItemGroup>
+			<_AppPriFiles Include="$(TargetDir)$(AssemblyName).pri" />
+			<_AppXbfFiles Include="$(TargetDir)*.xbf" />
+			<_AppXamlControlsXbf Include="$(TargetDir)Microsoft.UI.Xaml.Controls\*.xbf" />
+		</ItemGroup>
+
+		<Message Text="EnsureAppResourcesInPublish: copying @(_AppPriFiles-&gt;Count()) .pri file(s), @(_AppXbfFiles-&gt;Count()) .xbf file(s)" Importance="high" />
+
+		<Copy SourceFiles="@(_AppPriFiles)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="true" Condition="'@(_AppPriFiles)' != ''" />
+
+		<Copy SourceFiles="@(_AppXbfFiles)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="true" Condition="'@(_AppXbfFiles)' != ''" />
+
+		<Copy SourceFiles="@(_AppXamlControlsXbf)" DestinationFolder="$(PublishDir)Microsoft.UI.Xaml.Controls" SkipUnchangedFiles="true" Condition="'@(_AppXamlControlsXbf)' != ''" />
+
+		<Message Text="EnsureAppResourcesInPublish: complete -&gt; $(PublishDir)" Importance="high" />
+
+	</Target>
+	<Target Name="RemoveExtraLocales" AfterTargets="Publish">
+
+		<ItemGroup>
+			<_KeptLocales Include="en" />
+			<_KeptLocales Include="en-US" />
+
+			<_AllLocaleFolders
+				Include="$([System.IO.Directory]::GetDirectories('$(PublishDir)'))" />
+
+			<_LocalesToDelete
+				Include="@(_AllLocaleFolders)"
+				Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('%(Filename)', '^[a-z]{2}(-[A-Za-z]{2,4})?$'))" />
+
+			<_KeepFullPaths
+				Include="@(_KeptLocales -> '$(PublishDir)%(Identity)')" />
+
+			<_FoldersToActuallyDelete
+				Include="@(_LocalesToDelete)"
+				Exclude="@(_KeepFullPaths)" />
+		</ItemGroup>
+
+		<Message
+			Text="RemoveExtraLocales: removing @(_FoldersToActuallyDelete->Count()) locale folder(s)"
+			Importance="high" />
+
+		<RemoveDir
+			Directories="@(_FoldersToActuallyDelete)"
+			ContinueOnError="true" />
+
+	</Target>
+</Project>

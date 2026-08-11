@@ -1,0 +1,146 @@
+# Copilot Agent Skill - {Skill Name}
+
+## Summary
+
+One paragraph describing what this skill does, when it should be invoked, and the outcome it produces.
+
+---
+
+## Trigger Patterns
+
+The skill activates when the user expresses one of these intents:
+
+- "{Example user phrase 1}"
+- "{Example user phrase 2}"
+- "{Example user phrase 3}"
+
+Avoid triggering on:
+
+- "{Phrase that should NOT activate this skill}"
+- "{Another excluded phrase}"
+
+---
+
+## Inputs
+
+| Input Name | Type | Required | Description |
+|---|---|---|---|
+| InputOne | string | Yes | What this input represents |
+| InputTwo | int | No | Optional numeric input |
+| InputThree | enum | No | Allowed values: A, B, C |
+
+### Validation Rules
+- {Rule about acceptable input ranges}
+- {Rule about required formats}
+- {Rule about combining inputs}
+
+---
+
+## Outputs
+
+| Output Name | Type | Description |
+|---|---|---|
+| OutputOne | string | What this output represents |
+| OutputTwo | object | Structured result |
+
+### Output Format
+
+The skill returns results as a JSON object with these top-level fields:
+
+- status: "success" or "failure"
+- data: object containing outputs
+- warnings: array of strings (may be empty)
+
+---
+
+## Behavior
+
+### Step 1 - Validate Inputs
+- Check required inputs are present.
+- Reject with a clear message if validation fails.
+
+### Step 2 - Execute Core Action
+- {Describe the main action the skill performs}
+- {Note any side effects on user data or system state}
+
+### Step 3 - Format Response
+- Apply the response style defined in agent instructions.
+- Include any warnings or follow-up actions.
+
+---
+
+## Error Handling
+
+| Error Case | User-Facing Message | Internal Log |
+|---|---|---|
+| Missing required input | "I need {input name} to proceed." | Log input name |
+| Permission denied | "You don't have access to perform this." | Log identity and resource |
+| Upstream service down | "I can't reach {service} right now." | Log service and error code |
+
+---
+
+## Performance Expectations
+
+- Median response time: under 2 seconds
+- Maximum acceptable response time: 10 seconds
+- Cache strategy: {what is cached and for how long}
+- Rate limit: {requests per minute, if applicable}
+
+---
+
+## Dependencies
+
+- API: {API name and version}
+- Authentication: {Bearer token / Managed Identity / API Key}
+- Permissions or scopes required: {list scopes}
+- External libraries: {list libraries}
+
+---
+
+## Telemetry
+
+The skill emits these events:
+
+| Event Name | When | Properties |
+|---|---|---|
+| SkillInvoked | On every call | UserId, Input summary |
+| SkillSucceeded | On success | UserId, Duration |
+| SkillFailed | On any error | UserId, ErrorCategory, Message |
+
+---
+
+## Governance
+
+- Owner: {Owner Name}
+- Approver: {Approver Name}
+- Privacy classification: {Public / Internal / Confidential}
+- Logging classification: {Standard / PII-Redacted}
+- Retention: {Period}
+
+---
+
+## Examples
+
+### Example 1 - Happy Path
+
+User input:
+{Example user request}
+
+Skill response:
+{Example successful response}
+
+### Example 2 - Validation Error
+
+User input:
+{Example invalid input}
+
+Skill response:
+"I need {missing input} to proceed."
+
+---
+
+## Revision History
+
+| Version | Date | Author | Change Summary |
+|---|---|---|---|
+| 1.0 | {YYYY-MM-DD} | {Author} | Initial release |

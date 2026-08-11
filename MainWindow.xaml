@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="MarkdownEditor.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:webview="using:Microsoft.UI.Xaml.Controls"
+    xmlns:vm="using:MarkdownEditor.ViewModels">
+
+    <Grid x:Name="RootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.KeyboardAccelerators>
+
+            <KeyboardAccelerator Key="F"
+                         Modifiers="Control"
+                         Invoked="ShowFindAccelerator_Invoked" />
+
+            <KeyboardAccelerator Key="H"
+                         Modifiers="Control"
+                         Invoked="ShowReplaceAccelerator_Invoked" />
+
+            <KeyboardAccelerator Key="F3"
+                         Modifiers="None"
+                         Invoked="FindNextAccelerator_Invoked" />
+
+            <KeyboardAccelerator Key="F3"
+                         Modifiers="Shift"
+                         Invoked="FindPreviousAccelerator_Invoked" />
+
+            <KeyboardAccelerator Key="B"
+                         Modifiers="Control"
+                         Invoked="BoldAccelerator_Invoked" />
+
+            <KeyboardAccelerator Key="I"
+                         Modifiers="Control"
+                         Invoked="ItalicAccelerator_Invoked" />
+
+            <KeyboardAccelerator Key="Number1"
+                         Modifiers="Control"
+                         Invoked="Heading1Accelerator_Invoked" />
+
+            <KeyboardAccelerator Key="Number2"
+                         Modifiers="Control"
+                         Invoked="Heading2Accelerator_Invoked" />
+
+            <KeyboardAccelerator Key="Number3"
+                         Modifiers="Control"
+                         Invoked="Heading3Accelerator_Invoked" />
+
+            <KeyboardAccelerator Key="Number4"
+                         Modifiers="Control"
+                         Invoked="Heading4Accelerator_Invoked" />
+
+            <KeyboardAccelerator Key="Number0"
+                         Modifiers="Control"
+                         Invoked="HeadingClearAccelerator_Invoked" />
+
+        </Grid.KeyboardAccelerators>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="32" />
+        </Grid.RowDefinitions>
+
+        <!-- Toolbar -->
+        <Border Grid.Row="0"
+                Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}"
+                BorderThickness="0,0,0,1">
+
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled"
+                          HorizontalScrollMode="Auto">
+
+                <StackPanel x:Name="ToolbarPanel"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            Padding="4,2,4,2">
+
+                    <AppBarButton Icon="Page"
+                                  Label="New"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="New"
+                                  Command="{x:Bind ViewModel.NewCommand}" />
+
+                    <DropDownButton x:Name="NewFromTemplateButton"
+                                    ToolTipService.ToolTip="New from Template"
+                                    VerticalAlignment="Center"
+                                    Margin="2,2,2,2"
+                                    Padding="8,6,8,6">
+
+                        <SymbolIcon Symbol="NewFolder" />
+
+                        <DropDownButton.Flyout>
+                            <MenuFlyout x:Name="TemplatesFlyout"
+                                        Placement="Bottom"
+                                        Opening="TemplatesFlyout_Opening" />
+                        </DropDownButton.Flyout>
+
+                    </DropDownButton>
+
+                    <SplitButton x:Name="OpenSplitButton"
+                                 Command="{x:Bind ViewModel.OpenCommand}"
+                                 ToolTipService.ToolTip="Open file (click) - Recent files (arrow)"
+                                 VerticalAlignment="Center"
+                                 Margin="2,2,2,2"
+                                 Padding="8,6,8,6">
+
+                        <SymbolIcon Symbol="OpenFile" />
+
+                        <SplitButton.Flyout>
+                            <MenuFlyout x:Name="RecentFilesFlyout"
+                                        Placement="Bottom"
+                                        Opening="RecentFilesFlyout_Opening" />
+                        </SplitButton.Flyout>
+
+                    </SplitButton>
+
+                    <AppBarButton Icon="Save"
+                                  Label="Save"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Save"
+                                  Command="{x:Bind ViewModel.SaveCommand}" />
+
+                    <AppBarButton Icon="SaveLocal"
+                                  Label="Save As"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Save As"
+                                  Command="{x:Bind ViewModel.SaveAsCommand}" />
+
+
+                    <AppBarButton Icon="Print"
+                                  Label="Export PDF"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Export to PDF"
+                                  Command="{x:Bind ViewModel.ExportPdfCommand}" />
+
+                    <AppBarSeparator />
+
+                    <AppBarButton Icon="Find"
+                                  Label="Find"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Find (Ctrl+F)"
+                                  Click="FindToolbarButton_Click" />
+
+                    <AppBarButton Icon="Repair"
+                                  Label="Find and Replace"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Find and Replace (Ctrl+H)"
+                                  Click="ReplaceToolbarButton_Click" />
+
+                    <AppBarButton Icon="Bold"
+                                  Label="Bold"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Bold"
+                                  Command="{x:Bind ViewModel.BoldCommand}" />
+
+                    <AppBarButton Icon="Italic"
+                                  Label="Italic"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Italic"
+                                  Command="{x:Bind ViewModel.ItalicCommand}" />
+
+                    <AppBarButton Icon="Add"
+                                  Label="Heading"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Heading"
+                                  Command="{x:Bind ViewModel.HeadingCommand}" />
+
+                    <AppBarButton Icon="List"
+                                  Label="Bullet"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Bullet List"
+                                  Command="{x:Bind ViewModel.BulletCommand}" />
+
+                    <AppBarButton Icon="Link"
+                                  Label="Link"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Link"
+                                  Command="{x:Bind ViewModel.LinkCommand}" />
+
+                    <AppBarButton Icon="Comment"
+                                  Label="Code"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Code"
+                                  Command="{x:Bind ViewModel.CodeCommand}" />
+
+                    <AppBarSeparator />
+
+                    <AppBarButton Icon="Edit"
+                                  Label="Toggle Editor"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Toggle Editor"
+                                  Command="{x:Bind ViewModel.ToggleEditorCommand}" />
+
+                    <AppBarButton Icon="View"
+                                  Label="Toggle Preview"
+                                  LabelPosition="Collapsed"
+                                  ToolTipService.ToolTip="Toggle Preview"
+                                  Command="{x:Bind ViewModel.TogglePreviewCommand}" />
+
+                    <AppBarSeparator />
+
+                    <DropDownButton x:Name="ThemeDropDownButton"
+                                    ToolTipService.ToolTip="Theme"
+                                    VerticalAlignment="Center"
+                                    Margin="2,2,2,2"
+                                    Padding="8,6,8,6">
+
+                        <SymbolIcon Symbol="View" />
+
+                        <DropDownButton.Flyout>
+                            <MenuFlyout x:Name="ThemeFlyout" Placement="Bottom">
+
+                                <MenuFlyoutItem x:Name="ThemeSystemItem"
+                            Text="System"
+                            Click="ThemeSystemItem_Click">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE770;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+
+                                <MenuFlyoutItem x:Name="ThemeLightItem"
+                            Text="Light"
+                            Click="ThemeLightItem_Click">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE706;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+
+                                <MenuFlyoutItem x:Name="ThemeDarkItem"
+                            Text="Dark"
+                            Click="ThemeDarkItem_Click">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE708;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+
+                            </MenuFlyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Editor + Preview -->
+        <!-- Main content (Find/Replace + Tab View) -->
+        <Grid Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Find / Replace (shared, operates on active tab) -->
+            <Border x:Name="FindReplacePanel"
+            Grid.Row="0"
+            Visibility="Collapsed"
+            Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+            BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}"
+            BorderThickness="0,0,0,1"
+            Padding="8,6,8,6">
+
+                <StackPanel Orientation="Vertical" Spacing="4">
+
+                    <!-- Find row -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="FindTextBox"
+                         Grid.Column="0"
+                         PlaceholderText="Find"
+                         FontFamily="Segoe UI"
+                         FontSize="13"
+                         Margin="0,0,8,0"
+                         KeyDown="FindTextBox_KeyDown"
+                         TextChanged="FindTextBox_TextChanged" />
+
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
+                            <Button x:Name="FindPreviousButton"
+                            ToolTipService.ToolTip="Find previous (Shift+F3)"
+                            Padding="6"
+                            Click="FindPreviousButton_Click">
+                                <FontIcon Glyph="&#xE70E;" FontSize="14" />
+                            </Button>
+
+                            <Button x:Name="FindNextButton"
+                            ToolTipService.ToolTip="Find next (F3)"
+                            Padding="6"
+                            Click="FindNextButton_Click">
+                                <FontIcon Glyph="&#xE70D;" FontSize="14" />
+                            </Button>
+
+                            <ToggleButton x:Name="MatchCaseButton"
+                                  ToolTipService.ToolTip="Match case"
+                                  Padding="6"
+                                  Content="Aa"
+                                  FontWeight="SemiBold"
+                                  FontSize="12"
+                                  Checked="MatchOptions_Changed"
+                                  Unchecked="MatchOptions_Changed" />
+
+                            <ToggleButton x:Name="MatchWholeWordButton"
+                                  ToolTipService.ToolTip="Match whole word"
+                                  Padding="6"
+                                  Content="ab"
+                                  FontWeight="SemiBold"
+                                  FontSize="12"
+                                  Checked="MatchOptions_Changed"
+                                  Unchecked="MatchOptions_Changed" />
+
+                            <ToggleButton x:Name="ToggleReplaceButton"
+                                  ToolTipService.ToolTip="Toggle replace"
+                                  Padding="6"
+                                  Checked="ToggleReplaceButton_Toggled"
+                                  Unchecked="ToggleReplaceButton_Toggled">
+                                <FontIcon Glyph="&#xE8AB;" FontSize="14" />
+                            </ToggleButton>
+
+                            <Button x:Name="CloseFindButton"
+                            ToolTipService.ToolTip="Close (Esc)"
+                            Padding="6"
+                            Click="CloseFindButton_Click">
+                                <FontIcon Glyph="&#xE711;" FontSize="14" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Replace row -->
+                    <Grid x:Name="ReplaceRow" Visibility="Collapsed">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="ReplaceTextBox"
+                         Grid.Column="0"
+                         PlaceholderText="Replace"
+                         FontFamily="Segoe UI"
+                         FontSize="13"
+                         Margin="0,0,8,0"
+                         KeyDown="ReplaceTextBox_KeyDown" />
+
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
+                            <Button x:Name="ReplaceOneButton"
+                            ToolTipService.ToolTip="Replace next match"
+                            Padding="6"
+                            Content="Replace"
+                            FontSize="12"
+                            Click="ReplaceOneButton_Click" />
+
+                            <Button x:Name="ReplaceAllButton"
+                            ToolTipService.ToolTip="Replace all matches"
+                            Padding="6"
+                            Content="Replace All"
+                            FontSize="12"
+                            Click="ReplaceAllButton_Click" />
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock x:Name="FindStatusText" FontSize="12" Opacity="0.8" />
+
+                </StackPanel>
+            </Border>
+
+            <!-- Tab View with per-tab editor + preview -->
+            <TabView x:Name="DocumentTabs"
+                     Grid.Row="1"
+                     VerticalAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     TabItemsSource="{x:Bind ViewModel.Tabs, Mode=OneWay}"
+                     SelectedItem="{x:Bind ViewModel.ActiveTab, Mode=TwoWay}"
+                     IsAddTabButtonVisible="True"
+                     CanReorderTabs="True"
+                     CanDragTabs="False"
+                     AddTabButtonClick="DocumentTabs_AddTabButtonClick"
+                     TabCloseRequested="DocumentTabs_TabCloseRequested">
+
+
+                <TabView.TabItemTemplate>
+                    <DataTemplate x:DataType="vm:DocumentViewModel">
+                        <TabViewItem Header="{x:Bind DisplayTitle, Mode=OneWay}"
+                                     ToolTipService.ToolTip="{x:Bind Tooltip, Mode=OneWay}"
+                                     IsClosable="True"
+                                     VerticalContentAlignment="Stretch"
+                                     HorizontalContentAlignment="Stretch">
+
+                            <TabViewItem.Content>
+                                <Grid HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBox Grid.Column="0"
+                                             AcceptsReturn="True"
+                                             TextWrapping="Wrap"
+                                             FontFamily="Consolas"
+                                             FontSize="15"
+                                             Padding="12"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Stretch"
+                                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                             ScrollViewer.HorizontalScrollMode="Auto"
+                                             ScrollViewer.VerticalScrollMode="Auto"
+                                             SelectionHighlightColorWhenNotFocused="{ThemeResource SystemAccentColorLight2}"
+                                             Text="{x:Bind MarkdownText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             Loaded="EditorInstance_Loaded"
+                                             Unloaded="EditorInstance_Unloaded"
+                                             TextChanged="EditorInstance_TextChanged" />
+
+                                    <webview:WebView2 Grid.Column="1"
+                                                      HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Stretch"
+                                                      Loaded="PreviewInstance_Loaded"
+                                                      Unloaded="PreviewInstance_Unloaded" />
+                                </Grid>
+                            </TabViewItem.Content>
+
+                        </TabViewItem>
+                    </DataTemplate>
+                </TabView.TabItemTemplate>
+
+            </TabView>
+
+        </Grid>
+
+        <!-- Status bar -->
+        <Border Grid.Row="2"
+                Background="#0F4E92"
+                Padding="8,0">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           FontSize="12" />
+
+                <TextBlock x:Name="EnvBadge"
+                           Grid.Column="1"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           FontSize="12"
+                           Margin="12,0,0,0" />
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

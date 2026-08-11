@@ -1,0 +1,111 @@
+# Standard Operating Procedure - {SOP Title}
+
+| Field | Value |
+|---|---|
+| Document Owner | {Owner Name} |
+| Reviewer | {Reviewer Name} |
+| Approver | {Approver Name} |
+| Version | 1.0 |
+| Effective Date | {YYYY-MM-DD} |
+| Next Review Date | {YYYY-MM-DD} |
+| Classification | Internal |
+
+---
+
+## 1. Purpose
+
+Briefly describe what this SOP accomplishes and why it exists. State the business outcome it ensures.
+
+---
+
+## 2. Scope
+
+Describe what is covered by this SOP and what is explicitly out of scope. List the systems, teams, and processes that are affected.
+
+- In scope:
+  - ...
+  - ...
+- Out of scope:
+  - ...
+  - ...
+
+---
+
+## 3. Roles and Responsibilities
+
+| Role | Responsibility |
+|---|---|
+| Process Owner | Maintains this SOP and approves changes |
+| Operator | Executes the procedure |
+| Reviewer | Confirms the procedure was performed correctly |
+| Approver | Provides sign-off for changes |
+
+---
+
+## 4. Prerequisites
+
+List anything that must be true before the procedure can be performed.
+
+- Required access:
+  - ...
+- Required tools:
+  - ...
+- Required knowledge:
+  - ...
+
+---
+
+## 5. Procedure
+
+### Step 1 - {Action}
+Describe the action. Include who performs it and what the expected outcome is.
+
+### Step 2 - {Action}
+Describe the action.
+
+### Step 3 - {Action}
+Describe the action.
+
+> Note: Use callouts for safety, prerequisites, or known pitfalls.
+
+---
+
+## 6. Verification
+
+Describe how the operator confirms the procedure completed successfully.
+
+- Expected result: ...
+- How to verify: ...
+- What to do if verification fails: ...
+
+---
+
+## 7. Rollback or Recovery
+
+Describe what to do if the procedure fails midway, including how to leave the system in a safe state.
+
+---
+
+## 8. Logging and Evidence
+
+Describe what must be documented after the procedure runs.
+
+- What to record: ...
+- Where to store it: ...
+- Retention period: ...
+
+---
+
+## 9. Related Documents
+
+- Link 1
+- Link 2
+- Link 3
+
+---
+
+## 10. Revision History
+
+| Version | Date | Author | Change Summary |
+|---|---|---|---|
+| 1.0 | {YYYY-MM-DD} | {Author} | Initial version |
