@@ -1,6 +1,6 @@
 
 
-| ![AppIcon]([Docs/resources/AppIcon_128.png](https://i.imgur.com/4uCpITP.png) "App Icon") | [User Guide](Docs/UserGuide.md) |
+| ![App Icon](https://i.imgur.com/4uCpITP.png "App Icon") | [User Guide](Docs/UserGuide.md) |
 
 # Markdown Editor
 
