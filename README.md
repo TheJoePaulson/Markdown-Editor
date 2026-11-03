@@ -3,6 +3,14 @@
 ![App Icon](https://i.imgur.com/OuLdmgF.png "App Icon") | [User Guide](Docs/UserGuide.md) |
 
 # Markdown Editor
+![.NET 8](https://img.shields.io/badge/.NET-8-512BD4?logo=dotnet&style=flat-square)
+![WinUI 3](https://img.shields.io/badge/UI-WinUI_3-0078D4?logo=windows&style=flat-square)
+![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?logo=windows11&style=flat-square)
+![Portable](https://img.shields.io/badge/Portable-Yes-success?style=flat-square)
+![Markdown](https://img.shields.io/badge/Markdown-Editor-000000?logo=markdown&style=flat-square)
+![PDF Export](https://img.shields.io/badge/PDF-Export-red?logo=adobeacrobatreader&style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Active-success?style=flat-square)
 
 A portable, self-contained WinUI 3 Markdown editor for Windows 11 and Server 2025, built for IT professionals writing SOPs, runbooks, README files, and Copilot agent instructions.
 
